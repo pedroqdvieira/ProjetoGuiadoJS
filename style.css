@@ -76,5 +76,33 @@ main > div > div:nth-child(2){
 
 main > div > form{
     background-color: #464b5e;
-    padding: 1.6rem;
+    padding: 1rem 1.6rem;
+    display: flex;
+    gap: 5%;
+}
+
+main > div > form > input {
+    background-color: #333745;
+    width: 75%;
+    border:none;
+    color: #a5afd7;
+    padding: 1rem;
+    border-bottom: 0.2rem solid #102028;
+    
+}
+
+main > div > form > button {
+    width: 20%;
+    border-radius: 1rem;
+    background-color: #8357c5;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+main > div > form > button:hover {
+    opacity: 1;
 }
