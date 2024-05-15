@@ -99,8 +99,25 @@ main > div > form > button {
     cursor: pointer;
     opacity: 0.8;
 }
+
 main > div > form > button:hover{
     opacity: 1;
+}
+
+#alert{
+    width: 70vw;
+    padding: 1rem;
+    background-color: red;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 15vw;
+}
+
+.closebtn{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }
 
 /*https://ufes.es/aula1505*/
