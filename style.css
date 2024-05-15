@@ -50,7 +50,7 @@ main > div {
 }
 
 main > div > div:nth-child(1){
-    background-color: #3c4251;
+    background-color: #464b5e;
     display: flex;
     color: #a5afd7;
     padding: 0.8rem 1.6rem;
@@ -67,5 +67,8 @@ main > div > div:nth-child(1) > a:hover{
 }
 
 main > div > div:nth-child(2){
+    background-color: #3c4251;
+    color: #a5afd7;
+    text-align: center;
     
 }
