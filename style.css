@@ -112,12 +112,20 @@ main > div > form > button:hover{
     position: absolute;
     bottom: 0;
     right: 15vw;
+    font-size: 1rem;
+    display: none;
 }
 
 .closebtn{
     position: absolute;
     top: 1rem;
     right: 1rem;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.closebtn:hover{
+    color: gray;
 }
 
 /*https://ufes.es/aula1505*/
