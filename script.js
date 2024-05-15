@@ -12,3 +12,8 @@ function incluir(){
         alert.style.display = 'block';
     }
 }
+
+function closeMessage(){
+    let alert = document.getElementById('alert');
+    alert.style.display = 'none';
+}
