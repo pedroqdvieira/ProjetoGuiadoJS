@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo SPA</title>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,12 +26,13 @@
             </div>
             <form>
                 <input type="text" id="description">
-                <button>Incluir</button>
+                <button type="button" onclick="incluir()">Incluir</button>
             </form>
         </div>
 
         <div id="alert">
-            <p id="message"><strong id="message_type">Tipo de Mensagem</strong> para mostrar para o usuário</p>
+            <p><strong id="message_type">Tipo de Mensagem</strong>
+                <span id="message">Mensagem para mostrar para o usuário</span></p>
             <span class="closebtn">&times;</span>
         </div>
     </main>
