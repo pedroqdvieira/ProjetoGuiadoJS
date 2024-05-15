@@ -49,8 +49,8 @@ main > div {
 
 }
 
-main > div > div:nth-child(1){
-    background-color: #464b5e;
+main > div > div:nth-child(1){ 
+    background-color: #3c4251;
     display: flex;
     color: #a5afd7;
     padding: 0.8rem 1.6rem;
@@ -67,8 +67,14 @@ main > div > div:nth-child(1) > a:hover{
 }
 
 main > div > div:nth-child(2){
-    background-color: #3c4251;
+    background-color: #464b5e;
     color: #a5afd7;
     text-align: center;
-    
+    padding: 1.6rem;
+    border-bottom: 1px solid #5c627b;
+}
+
+main > div > form{
+    background-color: #464b5e;
+    padding: 1.6rem;
 }
