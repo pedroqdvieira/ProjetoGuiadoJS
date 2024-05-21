@@ -19,14 +19,14 @@
         <div>
             <div>
                 <p><strong>Suas Opções</strong></p>
-                <a href="">Remover todos</a>
+                <a onclick="removeAll()">Remover todos</a>
             </div>
-            <div>
+            <div id="tasks">
                 <p>Insira a primeira tarefa para começar....</p>
             </div>
-            <form>
+            <form onsubmit="addTask(event)">
                 <input type="text" id="description">
-                <button type="button" onclick="incluir()">Incluir</button>
+                <button type="submit">Incluir</button>
             </form>
         </div>
 
