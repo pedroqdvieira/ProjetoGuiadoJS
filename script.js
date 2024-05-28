@@ -2,13 +2,16 @@ let taskList = [];
 
 function loadTasks(){
     let list = localStorage.getItem("taskList");
-    if(list){
-        taskList = JSON.parse(list);
-    }else{
-        taskList = [];
-    }
-
+    taskList = list ? JSON.parse(list) : taskList = [];
     updateTasks();
+}
+
+function removeAll(){
+    
+    taskList = [];
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+    updateTasks();
+    
 }
 
 function addTask(event){
@@ -18,6 +21,7 @@ function addTask(event){
         showMessage();
     }else{
         taskList.push(description.value);
+        description.value = '';
         localStorage.setItem('taskList', JSON.stringify(taskList));
         updateTasks();
     }
@@ -59,12 +63,4 @@ function updateTasks(){
         p.innerText = 'Insira a primeira tarefa para começar....';
         divTasks.replaceChildren(p);
     }
-}
-
-function removeAll(){
-    
-    taskList = [];
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTasks();
-    
 }
