@@ -64,5 +64,7 @@ function updateTasks(){
 function removeAll(){
     
     taskList = [];
+    localStorage.setItem('taskList', JSON.stringify(taskList));
     updateTasks();
+    
 }
