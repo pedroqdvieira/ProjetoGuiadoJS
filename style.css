@@ -128,4 +128,8 @@ main > div > form > button:hover{
     color: gray;
 }
 
+.highlight{
+    color: red;
+}
+
 /*https://ufes.es/aula1505*/
