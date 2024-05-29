@@ -24,6 +24,8 @@ function addTask(event){
         description.value = '';
         localStorage.setItem('taskList', JSON.stringify(taskList));
         updateTasks();
+
+
     }
 }
 
@@ -62,5 +64,17 @@ function updateTasks(){
         let p = document.createElement('p');
         p.innerText = 'Insira a primeira tarefa para começar....';
         divTasks.replaceChildren(p);
+    }
+
+}
+
+function randTask(){
+    if(taskList.length > 0){
+        let randonIndex = Math.floor(Math.random() * taskList.length);
+        let selectedTask = document.querySelectorAll('#tasks li');
+        selectedTask.forEach(task => task.classList.remove('highlight'));
+        selectedTask[randonIndex].classList.add('highlight');
+        
+        console.log(selectedTask);
     }
 }
