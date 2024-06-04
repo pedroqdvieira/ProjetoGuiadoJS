@@ -4,6 +4,12 @@ function loadTasks(){
     let list = localStorage.getItem("taskList");
     taskList = list ? JSON.parse(list) : taskList = [];
     updateTasks();
+
+    if (taskList.length == 0){
+        document.getElementById('todoButton').disabled=true;
+    }else{
+        document.getElementById('todoButton').disabled=false;
+    }
 }
 
 function removeAll(){
@@ -11,6 +17,7 @@ function removeAll(){
     taskList = [];
     localStorage.setItem('taskList', JSON.stringify(taskList));
     updateTasks();
+    document.getElementById('todoButton').disabled=true;
     
 }
 
@@ -24,8 +31,7 @@ function addTask(event){
         description.value = '';
         localStorage.setItem('taskList', JSON.stringify(taskList));
         updateTasks();
-
-
+        document.getElementById('todoButton').disabled=false;
     }
 }
 
