@@ -44,6 +44,11 @@ main > button:disabled{
     cursor: not-allowed;
 }
 
+main > button:enabled{
+    opacity: 1;
+    cursor: pointer;
+}
+
 main > div {
     margin: 2rem 0;
 }
@@ -59,6 +64,7 @@ main > div > div:nth-child(1) {
 main > div > div:nth-child(1) > a{
     text-decoration: none;
     color: #a5afd7;
+    cursor: pointer;
 }
 main > div > div:nth-child(1) > a:hover{
     color: white;
