@@ -14,12 +14,12 @@
         <p>Não sabe o que fazer? Deixe seu computador decidir por vc....</p>
     </header>
     <main>
-        <button onclick="randTask()" id="adicionar">O que eu devo fazer?</button>
+        <button disabled onclick="randTask()" id="adicionar">O que eu devo fazer?</button>
 
         <div>
             <div>
                 <p><strong>Suas Opções</strong></p>
-                <a onclick="removeAll()">Remover todos</a>
+                <a id="removeAllButton" onclick="removeAll()">Remover todos</a>
             </div>
             <div id="tasks">
                 <p>Insira a primeira tarefa para começar....</p>
