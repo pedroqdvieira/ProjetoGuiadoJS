@@ -55,19 +55,36 @@ function showMessage(){
     }, 4000);
 }
 
+function removeItem(index){
+   taskList.splice(index, 1);
+   localStorage.setItem('taskList', JSON.stringify(taskList));
+   updateTasks();
+}
+
+
 function updateTasks(){
     let divTasks = document.getElementById('tasks');
     if(taskList.length > 0){
         let newOl = document.createElement('ol');
 
-        taskList.forEach((task)=>{
+        taskList.forEach((task, index)=>{
             let newLi = document.createElement('li');
             let innerLi = document.createElement('li');
-            let newA = document.createElement('a');
-            newA.innerText = "Remover tarefa";
+            let buttonUl = document.createElement('ul');
+            let removeBotao = document.createElement('button');
+            removeBotao.innerHTML = "Remover tarefa";
+            removeBotao.id = "removeTarefaBotao";
+            removeBotao.onclick = function (){
+                removeItem(index);
+            }
+            let completaBotao = document.createElement('button');
+            completaBotao.innerHTML = "Tarefa concluída";
+            removeBotao.id = "removeTarefaBotao";
 
             innerLi.innerText = task;
-            innerLi.appendChild(newA);
+            buttonUl.appendChild(removeBotao);
+            buttonUl.appendChild(completaBotao);
+            innerLi.appendChild(buttonUl);
             innerLi.style.display = "flex";
             innerLi.style.justifyContent = "space-between";
             newLi.appendChild(innerLi);
