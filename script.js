@@ -62,8 +62,18 @@ function updateTasks(){
 
         taskList.forEach((task)=>{
             let newLi = document.createElement('li');
-            newLi.innerText = task;
+            let innerLi = document.createElement('li');
+            let newA = document.createElement('a');
+            newA.innerText = "Remover tarefa";
+
+            innerLi.innerText = task;
+            innerLi.appendChild(newA);
+            innerLi.style.display = "flex";
+            innerLi.style.justifyContent = "space-between";
+            newLi.appendChild(innerLi);
             newOl.appendChild(newLi);
+            
+            
         });
         divTasks.replaceChildren(newOl);
     }else{
