@@ -69,7 +69,7 @@ function updateTasks(){
 
         taskList.forEach((task, index)=>{
             let newLi = document.createElement('li');
-            let innerLi = document.createElement('li');
+            let innerLi = document.createElement('ul');
             let buttonUl = document.createElement('ul');
             let removeBotao = document.createElement('button');
             removeBotao.innerHTML = "Remover tarefa";
@@ -102,8 +102,12 @@ function updateTasks(){
 }
 
 function randTask(){
+    let i = taskList.length;
+    console.log(i);
+
     if(taskList.length > 0){
-        let randonIndex = Math.floor(Math.random() * taskList.length);
+        let randonIndex = Math.floor(Math.random() * i);
+        console.log(randonIndex);
         let selectedTask = document.querySelectorAll('#tasks li');
         selectedTask.forEach(task => task.classList.remove('highlight'));
         selectedTask[randonIndex].classList.add('highlight');
