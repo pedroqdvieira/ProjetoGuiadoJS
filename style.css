@@ -44,11 +44,6 @@ main > button:disabled{
     cursor: not-allowed;
 }
 
-main > button:enabled{
-    opacity: 1;
-    cursor: pointer;
-}
-
 main > div {
     margin: 2rem 0;
 }
