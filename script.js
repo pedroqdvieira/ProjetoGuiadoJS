@@ -151,6 +151,7 @@ function updateTasks(){
             innerLi.style.display = "flex";
             innerLi.style.justifyContent = "space-between";
             
+            
             newLi.appendChild(innerLi);
             newOl.appendChild(newLi);
             
@@ -166,6 +167,22 @@ function updateTasks(){
     }
 
 }
+
+function removeItem(index){
+    taskList.splice(index, 1);
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+    updateTasks();
+    if (taskList.length==0){
+        document.getElementById('todoButton').disabled=true;
+    }
+}
+
+function completeTask(index){
+    let completedTask = document.querySelectorAll('#tasks li');
+    completedTask[index].classList.toggle('strike');
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+}
+
 
 //Seleciona e destaca uma tarefa aleatória
 function randTask(){
