@@ -65,15 +65,6 @@ main > div > div:nth-child(1) > a:hover{
     color: white;
 }
 
-#removeTarefaBotao{
-    text-decoration: none;
-    color: #a5afd7;
-    cursor: pointer;
-}
-
-#removeTarefaBotao:hover{
-    color: white;
-}
 
 main > div > div:nth-child(2) {
     background-color: #464B5E;
@@ -142,5 +133,23 @@ main > div > form > button:hover{
 .highlight{
     color: red;
 }
+
+.strike{
+    text-decoration: line-through;
+}
+
+.manageTasksButton{
+    background-color: #464B5E;
+    border: 2px, solid,#a5afd7;
+    color: #a5afd7;
+    text-decoration: none; 
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.manageTasksButton:hover{
+    color: white;
+}
+
 
 /*https://ufes.es/aula1505*/
