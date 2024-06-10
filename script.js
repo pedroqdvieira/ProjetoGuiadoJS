@@ -1,8 +1,9 @@
 
 let taskList;
 let taskComplete = [];
-let taskSearch =[];
 let i = 0;
+
+
 function loadtasks() {
     let list = localStorage.getItem('taskList');
     taskList = list ? JSON.parse(list) : [];
@@ -51,6 +52,7 @@ function updateTask() {
         let newOl = document.createElement('ol');
         taskList.forEach((task, index) => {
             let newLi = document.createElement('li');
+            newLi.classList.add("item");
             newLi.innerText = task.description;
             let completeButton = document.createElement('button');
             completeButton.innerText = 'Tarefa Completa';
@@ -124,23 +126,22 @@ function randTask() {
     }
 }
 
-/*function searchTask(event) {
-
+function searchTask(event) {
     event.preventDefault();
-    let termo = document.getElementById('term');
-    taskSearch.push({ description: termo.value, completed: false });
-    //console.log(description.value);
-    if (termo.value == '') {
-        showMessage();
-    } else {
+    let termo = document.getElementById('term').value;
+    termo = termo.toLowerCase();
+    console.log(termo);
+    
+    taskList.forEach((task, index) => {
+       let x = task.description;
+        if (x.includes(termo)) {
 
-       console.log(taskList.indexOf(termo.description));
-        //console.log(taskList.filter(filtro));
-        //console.log(taskList)
-    }
+                showFilter(index);
+        }
+    });
 }
 
-//function filtro(termo){
-//    let description = document.getElementById('term');
-//    return termo.value == description.value;
-//}*/
+
+function showFilter(index){
+    console.log(taskList[index], 'flag');
+}
