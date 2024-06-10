@@ -183,5 +183,9 @@ main > div > div > form > button:hover{
     color: white;
 }
 
+.hide{
+    display: none;
+}
+
 
 /*https://ufes.es/aula1505*/
