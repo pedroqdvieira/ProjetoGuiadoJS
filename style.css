@@ -163,7 +163,8 @@ main > div > div > form > button:hover{
 }
 
 .highlight{
-    color: red;
+    color: green;
+    text-decoration: underline;
 }
 
 .strike{
@@ -186,6 +187,7 @@ main > div > div > form > button:hover{
 .hide{
     display: none;
 }
+
 
 
 /*https://ufes.es/aula1505*/
