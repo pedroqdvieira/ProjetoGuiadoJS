@@ -18,7 +18,7 @@ function addTask(event) {
     if (description.value == '') {
         showMessage();
     } else {
-        taskList.push({ description: description.value, completed: false });
+        taskList.push({ description: description.value, completed: false, highlight: false });
         description.value = '';
         localStorage.setItem('taskList', JSON.stringify(taskList));
         updateTask();
@@ -46,20 +46,26 @@ function showMessage() {
 
 
 function updateTask() {
+
     let divTasks = document.getElementById('task');
     divTasks.innerHTML = '';
+
     if (taskList.length > 0) {
+
         let newOl = document.createElement('ol');
         taskList.forEach((task, index) => {
+
             let newLi = document.createElement('li');
             newLi.classList.add("item");
             newLi.innerText = task.description;
             let completeButton = document.createElement('button');
             completeButton.innerText = 'Tarefa Completa';
             completeButton.className = 'manageTasksButton';
+
             completeButton.onclick = function () {
                 completeTask(index);
             };
+
             let removeButton = document.createElement('button');
             removeButton.innerText = 'Remover Tarefa';
             // Define a classe do botão
@@ -67,6 +73,7 @@ function updateTask() {
             removeButton.onclick = function () {
                 removeTask(index);
             };
+
             let buttonUl = document.createElement('ul');
             buttonUl.appendChild(completeButton);
             buttonUl.appendChild(removeButton);
@@ -74,19 +81,34 @@ function updateTask() {
             newLi.style.display = "flex";
             newLi.style.justifyContent = "space-between";
             let outerLi = document.createElement('li');
-            outerLi.appendChild(newLi);
-
+            
             if (task.completed) {
                 newLi.style.textDecoration = 'line-through';
             }
+            
+            if(task.highlight){
+                console.log(task);
+                newLi.classList.add('highlight');
+                console.log(newLi);
+            }
+
+            outerLi.appendChild(newLi);
+
+            
+
             newOl.appendChild(outerLi);
         });
+
         divTasks.appendChild(newOl);
+
     } else {
+
         let p = document.createElement('p');
         p.innerText = 'Insira a primeira tarefa para começar...';
         divTasks.appendChild(p);
+
     }
+
     let botaoEscolherTarefa = document.getElementById('botaoEscolherTarefa');
     botaoEscolherTarefa.disabled = taskList.length === 0;
 }
@@ -130,18 +152,32 @@ function searchTask(event) {
     event.preventDefault();
     let termo = document.getElementById('term').value;
     termo = termo.toLowerCase();
-    console.log(termo);
     
-    taskList.forEach((task, index) => {
-       let x = task.description;
-        if (x.includes(termo)) {
+    if(termo == ''){
+        removeHighlights();
+    }else{
+        taskList.forEach((task, index) => {
+            let x = task.description;
+            if (x.includes(termo)) {
 
-                showFilter(index);
-        }
-    });
+                    showFilter(index);
+            }
+        });
+    }
+    
+    
 }
 
+function removeHighlights(){
+    taskList.forEach(task => {
+        task.highlight = false;
+    });
+
+    updateTask();
+}
 
 function showFilter(index){
-    console.log(taskList[index], 'flag');
+    taskList[index].highlight = true;
+    
+    updateTask();
 }
