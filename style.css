@@ -1,388 +1,189 @@
-//Variaveis globais
-let taskList; //lista de tarefas
-let taskComplete = []; //array de tarefas completas
-let i = 0; //contador de tarefas completas
-
-//função para carregar as tarefas
-function loadtasks() {
-    let list = localStorage.getItem('taskList');
-    taskList = list ? JSON.parse(list) : [];
-    updateTask();
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
 }
 
-//adiciona tarefas no array de tarefas e no localstorage
-function addTask(event) {
-
-    event.preventDefault();
-    let description = document.getElementById('description');
-    if (description.value == '') {
-        showMessage();
-    } else {
-        taskList.push({ description: description.value, completed: false, highlight: false });
-        description.value = '';
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        updateTask();
-    }
+body{
+    background-color: #333745;
 }
 
-//fecha mensagem de erro
-function closeMessage() {
-    let alert = document.getElementById('alert');
-    alert.style.display = 'none';
+header {
+    background-color: #20222B;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.4rem;
 }
 
-//mostra mensagem de erro
-function showMessage() {
-    let message_type = document.getElementById('message_type');
-    message_type.innerText = 'Erro: ';
-    let message = document.getElementById('message');
-    message.innerText = 'Você precisa descrever a tarefa.';
-    let alert = document.getElementById('alert');
-    alert.style.display = 'block';
-    setTimeout(() => {
-        closeMessage();
-    }, 4000);
+header > p {
+    font-size: 1rem;
+    color: #a5afd7;
 }
 
-//adiciona tarefas na página, assim como os botões de remover e conclui tarefa
-function updateTask() {
-
-    let divTasks = document.getElementById('task');
-    divTasks.innerHTML = '';
-
-    if (taskList.length > 0) {
-
-        let newOl = document.createElement('ol');
-        taskList.forEach((task, index) => {
-
-            let newLi = document.createElement('li');
-            newLi.classList.add("item");
-            newLi.innerText = task.description;
-            let completeButton = document.createElement('button');
-
-            completeButton.innerText = 'Tarefa Completa';
-            completeButton.className = 'manageTasksButton';
-            completeButton.onclick = function () {
-                completeTask(index);
-            };
-
-            let removeButton = document.createElement('button');
-
-            removeButton.innerText = 'Remover Tarefa';
-            removeButton.className = 'manageTasksButton';
-            removeButton.onclick = function () {
-                removeTask(index);
-            };
-
-            let buttonUl = document.createElement('ul');
-            buttonUl.appendChild(completeButton);
-            buttonUl.appendChild(removeButton);
-            newLi.appendChild(buttonUl);
-            newLi.style.display = "flex";
-            newLi.style.justifyContent = "space-between";
-            let outerLi = document.createElement('li');
-
-            //caso a tarefa seja marcada como completa, adiciona text decoration
-            if (task.completed) {
-                newLi.style.textDecoration = 'line-through';
-            }
-            
-            //adiciona hilight na tarefa para pesquisa de tarefas
-            if(task.highlight){
-                console.log(task);
-                newLi.classList.add('highlight');
-                console.log(newLi);
-            }
-
-            outerLi.appendChild(newLi);
-            newOl.appendChild(outerLi);
-        });
-
-        divTasks.appendChild(newOl);
-
-    } else {
-
-        //caso nao haja tarefas para mostrar, exibe p
-        let p = document.createElement('p');
-        p.innerText = 'Insira a primeira tarefa para começar...';
-        divTasks.appendChild(p);
-
-    }
-
-    //desativa botao de escolher tarefas caso nao haja tarefas na lista
-    let botaoEscolherTarefa = document.getElementById('botaoEscolherTarefa');
-    botaoEscolherTarefa.disabled = taskList.length === 0;
+main {
+    margin: 2rem 20vw;
 }
 
-//toggle propriedade completed na tarefa para marcá-la como concluida e joga a tarefa no array de tarefas concluidas
-function completeTask(index) {
-    taskList[index].completed = !taskList[index].completed;
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
-    taskComplete[i] = taskList[index];
-    i++;
+main > button {
+    padding: 1rem 2rem;
+    width: 100%;
+    background-color: #8357C5;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    border-bottom: 0.4rem solid #693cad;
 }
 
-//remove tarefas do array atraves da função splice()
-function removeTask(index) {
-    taskList.splice(index, 1);
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
+main > button:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-//limpa o array de tarefas ao clicar em 'remover todos'
-function removeAll() {
-    taskList = [];
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
+main > div {
+    margin: 2rem 0;
 }
 
-//escolhe a tarefa aleatoria e exibe um alerta para destacar a tarefa escolhida
-function randTask() {
-    if (taskList.length > 0) {
-        let indiceAleatorio = Math.floor(Math.random() * taskList.length);
-        let tarefaEscolhida = taskList[indiceAleatorio];
-
-        if (tarefaEscolhida.completed == true) {
-            randTask();
-        } else {
-            alert('Eis o que você deve fazer agora: ' + tarefaEscolhida.description);
-            localStorage.setItem('taskList', JSON.stringify(taskList));
-            updateTask();
-        }
-    }
+main > div > div:nth-child(1) {
+    background-color: #3C4251;
+    display: flex;
+    color: #a5afd7;
+    padding: 0.8rem 1.6rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
-//procura no array de tarefas por tarefas que contenham o termo digitado;
-//chama função de remover highlight para previnir que palavras que nao contem o termo sejam destacadas
-//converte o termo pesquisado para minusculo para auxiliar na procura de tarefas, apos isso compara o termo pesquisado com a descrição da tarefa no array de tarefas, também convertido para minusculo
-function searchTask(event) {
-    event.preventDefault();
-    removeHighlights();
-    let termo = document.getElementById('term').value;
-    termo = termo.toLowerCase();
-    
-    if(termo == ''){
-        removeHighlights();
-    }else{
-        taskList.forEach((task, index) => {
-            let x = task.description.toLowerCase();
-            if (x.includes(termo)) {
-
-                    showFilter(index);
-            }
-        });
-    }
-    
-    
+main > div > div:nth-child(1) > a{
+    text-decoration: none;
+    color: #a5afd7;
+    cursor: pointer;
+}
+main > div > div:nth-child(1) > a:hover{
+    color: white;
 }
 
-//remove a propriedade de hilight das tarefas no array
-function removeHighlights(){
-    taskList.forEach(task => {
-        task.highlight = false;
-    });
 
-    updateTask();
+main > div > div:nth-child(2) {
+    background-color: #464B5E;
+    color: #a5afd7;
+    text-align: center;
+    padding: 1.6rem;
+    border-bottom: 1px solid #5C627B;
 }
 
-//dá a propriedade de hilight pras tarefas no array 
-function showFilter(index){
-    taskList[index].highlight = true;
-    
-    updateTask();
-}
-//Variaveis globais
-let taskList; //lista de tarefas
-let taskComplete = []; //array de tarefas completas
-let i = 0; //contador de tarefas completas
-
-//função para carregar as tarefas
-function loadtasks() {
-    let list = localStorage.getItem('taskList');
-    taskList = list ? JSON.parse(list) : [];
-    updateTask();
+main > div > form {
+    background-color: #464B5E;
+    padding: 1rem 1.6rem;
+    display: flex;
+    gap: 5%;
 }
 
-//adiciona tarefas no array de tarefas e no localstorage
-function addTask(event) {
-
-    event.preventDefault();
-    let description = document.getElementById('description');
-    if (description.value == '') {
-        showMessage();
-    } else {
-        taskList.push({ description: description.value, completed: false, highlight: false });
-        description.value = '';
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        updateTask();
-    }
+main > div > form > input {
+     background-color: #333745;
+     border: none;
+     width: 75%;
+     color: #a5afd7;
+     padding: 1rem;
+     border-bottom: 0.2rem solid #1D2028;
 }
 
-//fecha mensagem de erro
-function closeMessage() {
-    let alert = document.getElementById('alert');
-    alert.style.display = 'none';
+main > div > form > button {
+    width: 20%;
+    border-radius: 1rem;
+    background-color: #8357C5;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.8;
 }
 
-//mostra mensagem de erro
-function showMessage() {
-    let message_type = document.getElementById('message_type');
-    message_type.innerText = 'Erro: ';
-    let message = document.getElementById('message');
-    message.innerText = 'Você precisa descrever a tarefa.';
-    let alert = document.getElementById('alert');
-    alert.style.display = 'block';
-    setTimeout(() => {
-        closeMessage();
-    }, 4000);
+main > div > form > button:hover{
+    opacity: 1;
 }
 
-//adiciona tarefas na página, assim como os botões de remover e conclui tarefa
-function updateTask() {
 
-    let divTasks = document.getElementById('task');
-    divTasks.innerHTML = '';
 
-    if (taskList.length > 0) {
-
-        let newOl = document.createElement('ol');
-        taskList.forEach((task, index) => {
-
-            let newLi = document.createElement('li');
-            newLi.classList.add("item");
-            newLi.innerText = task.description;
-            let completeButton = document.createElement('button');
-
-            completeButton.innerText = 'Tarefa Completa';
-            completeButton.className = 'manageTasksButton';
-            completeButton.onclick = function () {
-                completeTask(index);
-            };
-
-            let removeButton = document.createElement('button');
-
-            removeButton.innerText = 'Remover Tarefa';
-            removeButton.className = 'manageTasksButton';
-            removeButton.onclick = function () {
-                removeTask(index);
-            };
-
-            let buttonUl = document.createElement('ul');
-            buttonUl.appendChild(completeButton);
-            buttonUl.appendChild(removeButton);
-            newLi.appendChild(buttonUl);
-            newLi.style.display = "flex";
-            newLi.style.justifyContent = "space-between";
-            let outerLi = document.createElement('li');
-
-            //caso a tarefa seja marcada como completa, adiciona text decoration
-            if (task.completed) {
-                newLi.style.textDecoration = 'line-through';
-            }
-            
-            //adiciona hilight na tarefa para pesquisa de tarefas
-            if(task.highlight){
-                console.log(task);
-                newLi.classList.add('highlight');
-                console.log(newLi);
-            }
-
-            outerLi.appendChild(newLi);
-            newOl.appendChild(outerLi);
-        });
-
-        divTasks.appendChild(newOl);
-
-    } else {
-
-        //caso nao haja tarefas para mostrar, exibe p
-        let p = document.createElement('p');
-        p.innerText = 'Insira a primeira tarefa para começar...';
-        divTasks.appendChild(p);
-
-    }
-
-    //desativa botao de escolher tarefas caso nao haja tarefas na lista
-    let botaoEscolherTarefa = document.getElementById('botaoEscolherTarefa');
-    botaoEscolherTarefa.disabled = taskList.length === 0;
+main > div > div > form > input {
+     background-color: #333745;
+     border: none;
+     width: 75%;
+     height: 0%;
+     color: #a5afd7;
+     padding: 0.5rem;
+     border-bottom: 0.2rem solid #1D2028;
 }
 
-//toggle propriedade completed na tarefa para marcá-la como concluida e joga a tarefa no array de tarefas concluidas
-function completeTask(index) {
-    taskList[index].completed = !taskList[index].completed;
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
-    taskComplete[i] = taskList[index];
-    i++;
+main > div > div > form > button {
+    width: 20%;
+    height: 0;
+    border-radius: 1rem;
+    background-color: #8357C5;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.8;
 }
 
-//remove tarefas do array atraves da função splice()
-function removeTask(index) {
-    taskList.splice(index, 1);
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
+main > div > div > form > button:hover{
+    opacity: 1;
 }
 
-//limpa o array de tarefas ao clicar em 'remover todos'
-function removeAll() {
-    taskList = [];
-    localStorage.setItem('taskList', JSON.stringify(taskList));
-    updateTask();
+
+
+#alert{
+    width: 70vw;
+    padding: 1rem;
+    background-color: red;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 15vw;
+    font-size: 1rem;
+    display: none;
 }
 
-//escolhe a tarefa aleatoria e exibe um alerta para destacar a tarefa escolhida
-function randTask() {
-    if (taskList.length > 0) {
-        let indiceAleatorio = Math.floor(Math.random() * taskList.length);
-        let tarefaEscolhida = taskList[indiceAleatorio];
-
-        if (tarefaEscolhida.completed == true) {
-            randTask();
-        } else {
-            alert('Eis o que você deve fazer agora: ' + tarefaEscolhida.description);
-            localStorage.setItem('taskList', JSON.stringify(taskList));
-            updateTask();
-        }
-    }
+.closebtn{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
-//procura no array de tarefas por tarefas que contenham o termo digitado;
-//chama função de remover highlight para previnir que palavras que nao contem o termo sejam destacadas
-//converte o termo pesquisado para minusculo para auxiliar na procura de tarefas, apos isso compara o termo pesquisado com a descrição da tarefa no array de tarefas, também convertido para minusculo
-function searchTask(event) {
-    event.preventDefault();
-    removeHighlights();
-    let termo = document.getElementById('term').value;
-    termo = termo.toLowerCase();
-    
-    if(termo == ''){
-        removeHighlights();
-    }else{
-        taskList.forEach((task, index) => {
-            let x = task.description.toLowerCase();
-            if (x.includes(termo)) {
-
-                    showFilter(index);
-            }
-        });
-    }
-    
-    
+.closebtn:hover{
+    color: gray;
 }
 
-//remove a propriedade de hilight das tarefas no array
-function removeHighlights(){
-    taskList.forEach(task => {
-        task.highlight = false;
-    });
-
-    updateTask();
+.highlight{
+    color: green;
+    text-decoration: underline;
 }
 
-//dá a propriedade de hilight pras tarefas no array 
-function showFilter(index){
-    taskList[index].highlight = true;
-    
-    updateTask();
+.strike{
+    text-decoration: line-through;
+}
+
+.manageTasksButton{
+    background-color: #464B5E;
+    border: 2px, solid,#a5afd7;
+    color: #a5afd7;
+    text-decoration: none; 
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.manageTasksButton:hover{
+    color: white;
+}
+
+.hide{
+    display: none;
 }
